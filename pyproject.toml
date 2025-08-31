@@ -1,0 +1,15 @@
+[build-system]
+requires = ["hatchling>=1.21.1"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bmi-calc"
+version = "0.1.0"
+description = "Calculadora de IMC (CLI) com CI/CD no GitHub Actions."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Ana Paula" }]
+dependencies = []
+
+[project.scripts]
+bmi = "bmi_calc.cli:main"
