@@ -1,5 +1,6 @@
 name: CI/CD
 
+# ci configurado para instalar pendências e rodar pytest
 on:
   pull_request:
   push:
