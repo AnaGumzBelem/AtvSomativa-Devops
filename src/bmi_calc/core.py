@@ -6,7 +6,7 @@ def bmi(peso_kg: float, altura_m: float) -> float:
         raise ValueError("Peso deve ser maior que zero.")
     if altura_m <= 0:
         raise ValueError("Altura deve ser maior que zero.")
-    return peso_kg / (altura_m ** 2)
+    return peso_kg / (altura_m**2)
 
 
 def category(valor_imc: float) -> str:
