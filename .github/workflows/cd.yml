@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  contents: write  # Isso permite criar releases com o GITHUB_TOKEN
+  contents: write  # Permite criar releases com GITHUB_TOKEN
 
 jobs:
   release:
@@ -15,14 +15,14 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Criar arquivo ZIP do código
-        run: zip -r release-${{ github.run_number }}.zip .
+      - name: Criar arquivo zip do projeto
+        run: zip -r release.zip ./*
 
-      - name: Upload do artifact ZIP
-        uses: actions/upload-artifact@v3
+      - name: Upload do arquivo zip como artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: release-zip
-          path: release-${{ github.run_number }}.zip
+          name: release-artifact
+          path: release.zip
 
       - name: Criar Release no GitHub
         uses: softprops/action-gh-release@v1
