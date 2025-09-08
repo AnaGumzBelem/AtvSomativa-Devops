@@ -8,8 +8,6 @@ def test_bmi_calculo_basico():
 
 
 def test_bmi_valores_invalidos():
-    import pytest
-
     with pytest.raises(ValueError):
         bmi(0, 1.7)
     with pytest.raises(ValueError):
