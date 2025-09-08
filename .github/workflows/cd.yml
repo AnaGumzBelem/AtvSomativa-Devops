@@ -1,35 +1,25 @@
-name: CD - Criação de Release para versionamento
+name: CD - Release
 
 on:
   push:
     branches:
       - main
 
+permissions:
+  contents: write  # Isso permite criar releases com o GITHUB_TOKEN
+
 jobs:
   release:
-    name: Create GitHub Release
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
+      - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v1
         with:
-          tag: v1.${{ github.run_number }}
-          release_name: "🚀 Versão v1.${{ github.run_number }}"
-          body: |
-            ✅ **Release automática criada com sucesso!**
-
-            **🔧 Detalhes:**
-            - 📦 Commit: `${{ github.sha }}`
-            - 👤 Autor: `${{ github.actor }}`
-            - 📁 Repositório: `${{ github.repository }}`
-            - 🕒 Data/Hora: `${{ github.event.head_commit.timestamp }}`
-
-            **📌 Última mensagem de commit:**
-            > `${{ github.event.head_commit.message }}`
-
-            ---
-            *Gerado automaticamente via GitHub Actions.*
+          tag_name: v1.0.${{ github.run_number }}
+          name: "Release v1.0.${{ github.run_number }}"
+          body: "Release automática gerada pelo GitHub Actions 🚀"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
