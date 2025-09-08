@@ -19,9 +19,7 @@ def main() -> None:
     args = parser.parse_args()
 
     valor = bmi(args.peso, args.altura)
-    print(
-        f"IMC: {valor:.2f} | Categoria: {category(valor)}"
-    )
+    print(f"IMC: {valor:.2f} | Categoria: {category(valor)}")
 
 
 def run_cli() -> None:
