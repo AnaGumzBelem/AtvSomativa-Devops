@@ -13,4 +13,4 @@ RUN pip install --upgrade pip \
  && pip install .
 
 # Comando padrão: executa o script CLI "bmi"
-CMD ["bmi"]
+ENTRYPOINT ["bmi"]
