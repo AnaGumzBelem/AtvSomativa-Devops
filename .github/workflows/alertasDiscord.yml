@@ -1,0 +1,24 @@
+name: GitHub Actions - Notificações para Discord
+
+on:
+  push:
+    branches:
+      - main  # Alerta quando houver um push no branch main
+  pull_request:
+    branches:
+      - main  # Alerta quando um PR for feito no branch main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Notificar no Discord
+        uses: atlassian/github-webhook-discord-action@v1.1
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          message: |
+            **Novo Push ou Merge no Branch Main!**
+            - **Commit:** ${{ github.sha }}
+            - **Autor:** ${{ github.actor }}
+            - **Mensagem do Commit:** ${{ github.event.head_commit.message }}
