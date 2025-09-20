@@ -16,4 +16,4 @@ jobs:
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          args: "**Novo Pull Request na Branch Main!**"
+          args: "Novo Pull Request foi feito na branch main!"
