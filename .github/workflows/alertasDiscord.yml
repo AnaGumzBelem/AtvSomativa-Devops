@@ -1,4 +1,4 @@
-name: Configuração de Alertas Discord
+
 discord:
   runs-on: ubuntu-latest
   steps:
