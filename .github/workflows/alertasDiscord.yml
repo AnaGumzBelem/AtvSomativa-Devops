@@ -4,7 +4,7 @@ on:
   pull_request_target:
     branches:
       - main
-    types: [opened, reopened, closed]
+    types: [opened, reopened, closed]  #types define o status da PR quando detectada
 
 permissions:
   contents: read
@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "Enviando mensagem de teste ao Discord..."
           curl -s -X POST -H "Content-Type: application/json" \
-            -d "{\"content\":\"📢 Teste: Pull Request ${GITHUB_REPOSITORY:-${{ github.repository }}} - ação: ${{ github.event.action }}\"}" \
+            -d "{\"content\":\" Teste: Pull Request ${GITHUB_REPOSITORY:-${{ github.repository }}} - ação: ${{ github.event.action }}\"}" \
             "${{ secrets.DISCORD_WEBHOOK }}" \
             && echo "Mensagem de teste enviada (verifique o canal do Discord)." || echo "Falha ao enviar mensagem de teste (curl retornou erro)."
 
@@ -38,4 +38,4 @@ jobs:
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          args: "📢 Um Pull Request foi detectado no repositório."
+          args: " Uma nova PR foi detectada no repositório."
