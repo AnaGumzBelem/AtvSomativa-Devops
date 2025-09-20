@@ -1,13 +1,21 @@
+name: Configurações de Alerta no Discord
 
-discord:
-  runs-on: ubuntu-latest
-  steps:
-      - uses: actions/checkout@v4
-      - name: Run Discord Webhook
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  send_alert:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checar código
+        uses: actions/checkout@v4
+
+      - name: Enviar alerta para o Discord
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-
           content: |
             **Novo Pull Request no Branch Main!**
             - **Autor do PR:** ${{ github.actor }}
