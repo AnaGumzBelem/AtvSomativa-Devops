@@ -1,41 +1,18 @@
 name: Alerta no Discord
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
-    types: [opened, reopened, closed]  #types define o status da PR quando detectada
-
-permissions:
-  contents: read
+    types: [opened, reopened, closed, synchronize]
 
 jobs:
   send_alert:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug - verificar secret e evento
-        run: |
-          if [ -z "${{ secrets.DISCORD_WEBHOOK }}" ]; then
-            echo "::warning::DISCORD_WEBHOOK NÃO está definido. Configure em Settings → Secrets."
-          else
-            echo "DISCORD_WEBHOOK está definido (valor oculto)."
-          fi
-          echo "Evento: ${{ github.event_name }} / Ação: ${{ github.event.action }}"
-          echo "Repositório: ${{ github.repository }}"
-          echo "PR autor: ${{ github.event.pull_request.user.login }}"
-
-      - name: Teste - enviar mensagem de teste ao Discord com curl (apenas se secret existir)
-        if: ${{ secrets.DISCORD_WEBHOOK != '' }}
-        run: |
-          echo "Enviando mensagem de teste ao Discord..."
-          curl -s -X POST -H "Content-Type: application/json" \
-            -d "{\"content\":\" Teste: Pull Request ${GITHUB_REPOSITORY:-${{ github.repository }}} - ação: ${{ github.event.action }}\"}" \
-            "${{ secrets.DISCORD_WEBHOOK }}" \
-            && echo "Mensagem de teste enviada (verifique o canal do Discord)." || echo "Falha ao enviar mensagem de teste (curl retornou erro)."
-
-      - name: Enviar alerta para o Discord (Action oficial)
+      - name: Enviar alerta para o Discord
         if: ${{ secrets.DISCORD_WEBHOOK != '' }}
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          args: " Uma nova PR foi detectada no repositório."
+          args: " Um Pull Request foi atualizado na branch main!"
