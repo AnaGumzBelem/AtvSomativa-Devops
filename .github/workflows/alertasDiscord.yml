@@ -4,34 +4,14 @@ on:
   pull_request:
     branches:
       - main
-    types: [opened, closed] # Dispara tanto na abertura quanto no fechamento/merge
+    types: [opened, closed]
 
 jobs:
   send_alert:
     runs-on: ubuntu-latest
     steps:
-      - name: Checar código
-        uses: actions/checkout@v4
-
-      # Passo de Debug aprimorado
-      - name: Debug - Imprimir valores para variáveis críticas
-        run: |
-          echo "Webhook URL: ${{ secrets.DISCORD_WEBHOOK }}"
-          echo "Título do PR: ${{ github.event.pull_request.title }}"
-          echo "Mensagem do PR: ${{ github.event.pull_request.body }}"
-          echo "Autor do PR: ${{ github.event.pull_request.user.login }}"
-          echo "Link do PR: ${{ github.event.pull_request.html_url }}"
-          echo "Ação do PR: ${{ github.event.action }}"
-          echo "Merged: ${{ github.event.pull_request.merged }}"
-
-      # Enviar alerta para o Discord
       - name: Enviar alerta para o Discord
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          args: >
-            ${{ github.event.action == 'opened' && 
-            format('🚀 Novo Pull Request aberto!\n**Título:** {0}\n**Autor:** {1}\n**Link:** {2}', github.event.pull_request.title, github.event.pull_request.user.login, github.event.pull_request.html_url) || 
-            (github.event.pull_request.merged && 
-            format('✅ Pull Request mergeado!\n**Título:** {0}\n**Autor:** {1}\n**Link:** {2}', github.event.pull_request.title, github.event.pull_request.user.login, github.event.pull_request.html_url) || 
-            format('❌ Pull Request fechado sem merge.\n**Título:** {0}\n**Autor:** {1}\n**Link:** {2}', github.event.pull_request.title, github.event.pull_request.user.login, github.event.pull_request.html_url)) }}
+          args: "📢 Um Pull Request foi atualizado na branch main!"
