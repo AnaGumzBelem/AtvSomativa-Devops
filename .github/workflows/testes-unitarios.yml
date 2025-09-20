@@ -25,4 +25,4 @@ jobs:
 
       - name: Executar testes com pytest
         run: |
-          pytest tests/ --verbose
+          PYTHONPATH=src pytest tests/ --verbose
