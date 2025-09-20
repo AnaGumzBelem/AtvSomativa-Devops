@@ -1,19 +1,13 @@
-name: GitHub Actions - Notificações para Discord
-
-on:
-  pull_request:
-    branches:
-      - main  # Alerta quando houver uma PR no branch main
-
-jobs:
-  notify:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Notificar no Discord
-        uses: PeterGevork/github-actions-webhook@v2.0.0
+name: Configuração de Alertas Discord
+discord:
+  runs-on: ubuntu-latest
+  steps:
+      - uses: actions/checkout@v4
+      - name: Run Discord Webhook
+        uses: johnnyhuy/actions-discord-git-webhook@main
         with:
-          url: https://discordapp.com/api/webhooks/1418726541730513069/6_sAn9jCRyhjO2wCVTF5ZKQfO_6r83LKKXZp8hY82pPhrw-F8zNTCVHRz-0s_aUzN-5o
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+
           content: |
             **Novo Pull Request no Branch Main!**
             - **Autor do PR:** ${{ github.actor }}
