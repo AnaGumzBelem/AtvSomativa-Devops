@@ -12,13 +12,15 @@ jobs:
       - name: Checar código
         uses: actions/checkout@v4
 
-      # Passo de Debug para imprimir os valores
-      - name: Debug - Imprimir valores
+      # Passo de Debug aprimorado
+      - name: Debug - Imprimir valores para variáveis críticas
         run: |
           echo "Webhook URL: ${{ secrets.DISCORD_WEBHOOK }}"
-          echo "Título do PR: ${{ github.event.pull_request.title || 'Título do PR não encontrado' }}"
-          echo "Mensagem Args: ${{ github.event.pull_request.body || 'Mensagem do PR não encontrada' }}"
+          echo "Título do PR: ${{ github.event.pull_request.title }}"
+          echo "Mensagem do PR: ${{ github.event.pull_request.body }}"
+          echo "Args: ${{ github.event.inputs.args || 'Argumento não fornecido' }}"
 
+      # Enviar alerta para o Discord
       - name: Enviar alerta para o Discord
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
