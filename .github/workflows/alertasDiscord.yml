@@ -1,4 +1,4 @@
-name: Configurações de Alerta no Discord
+name: Alerta no Discord
 
 on:
   pull_request:
@@ -16,8 +16,7 @@ jobs:
         uses: johnnyhuy/actions-discord-git-webhook@main
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: |
-            **Novo Pull Request no Branch Main!**
-            - **Autor do PR:** ${{ github.actor }}
-            - **Título do PR:** ${{ github.event.pull_request.title }}
-            - **Mensagem do PR:** ${{ github.event.pull_request.body }}
+          args: |
+            {
+              "content": "**Novo Pull Request no Branch Main!**\n- **Autor do PR:** ${{ github.actor }}\n- **Título do PR:** ${{ github.event.pull_request.title }}\n- **Mensagem do PR:** ${{ github.event.pull_request.body }}"
+            }
