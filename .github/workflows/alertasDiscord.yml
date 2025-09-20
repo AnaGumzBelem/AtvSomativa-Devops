@@ -17,6 +17,7 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           args: |
-            {
-              "content": "**Novo Pull Request no Branch Main!**\n- **Autor do PR:** ${{ github.actor }}\n- **Título do PR:** ${{ github.event.pull_request.title }}\n- **Mensagem do PR:** ${{ github.event.pull_request.body }}"
-            }
+            **Novo Pull Request no Branch Main!**
+            - **Autor do PR:** ${{ github.actor }}
+            - **Título do PR:** ${{ github.event.pull_request.title }}
+            - **Mensagem do PR:** ${{ github.event.pull_request.body }}
