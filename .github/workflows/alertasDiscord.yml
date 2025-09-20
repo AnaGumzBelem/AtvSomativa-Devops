@@ -10,9 +10,12 @@ jobs:
   send_alert:
     runs-on: ubuntu-latest
     steps:
-      - name: Enviar alerta para o Discord
-        if: ${{ secrets.DISCORD_WEBHOOK != '' }}
-        uses: johnnyhuy/actions-discord-git-webhook@main
-        with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          args: " Um Pull Request foi atualizado na branch main!"
+      - name: Enviar alerta para o Discord # NOME DO ALERTA
+        run: |
+          if [ -n "${{ secrets.DISCORD_WEBHOOK }}" ]; then
+            curl -H "Content-Type: application/json" \
+                 -d "{\"content\": \" Um Pull Request foi atualizado na branch main!\"}" \
+                 ${{ secrets.DISCORD_WEBHOOK }}
+          else
+            echo "Secret DISCORD_WEBHOOK não configurado. Ignorando alerta."
+          fi
